@@ -28,7 +28,7 @@
             add() {
                 axios.post('/api/words', {en: this.en, ru: this.ru, phrase: this.phrase})
                 .then( res => {
-                    console.log(res.data)
+                    router.push({name: 'word.index'})
                 })
             },
         },

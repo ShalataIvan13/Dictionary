@@ -5281,9 +5281,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "Index"
+  name: "Index",
+  data: function data() {
+    return {
+      user: null
+    };
+  },
+  mounted: function mounted() {
+    this.getUser();
+  },
+  methods: {
+    getUser: function getUser() {
+      axios.get('/api/user/').then(function (res) {
+        console.log(res.data);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -27948,7 +27962,7 @@ var render = function () {
                   staticClass: "me-3 py-2 text-dark text-decoration-none",
                   attrs: { to: { name: "word.index" } },
                 },
-                [_vm._v("Words")]
+                [_vm._v("Слова")]
               ),
               _vm._v(" "),
               _c(
@@ -27957,16 +27971,7 @@ var render = function () {
                   staticClass: "me-3 py-2 text-dark text-decoration-none",
                   attrs: { to: { name: "word.create" } },
                 },
-                [_vm._v("Add word")]
-              ),
-              _vm._v(" "),
-              _c(
-                "router-link",
-                {
-                  staticClass: "me-3 py-2 text-dark text-decoration-none",
-                  attrs: { to: { name: "word.edit" } },
-                },
-                [_vm._v("Edit word")]
+                [_vm._v("Добавить слово")]
               ),
             ],
             1
@@ -27974,7 +27979,7 @@ var render = function () {
         ]
       ),
       _vm._v(" "),
-      _c("p", [_vm._v("Привет, Пользователь! ID: 1 ")]),
+      _c("p", [_vm._v("Hello, ! ID: 1  ")]),
       _vm._v(" "),
       _c("router-view"),
     ],
@@ -43399,6 +43404,18 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	

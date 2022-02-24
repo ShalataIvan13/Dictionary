@@ -41,7 +41,9 @@ __webpack_require__.r(__webpack_exports__);
         ru: this.ru,
         phrase: this.phrase
       }).then(function (res) {
-        console.log(res.data);
+        _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+          name: 'word.index'
+        });
       });
     }
   }

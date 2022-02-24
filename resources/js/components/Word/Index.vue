@@ -3,7 +3,7 @@
         <div class="mt-4">
             <h3>Список слов</h3>
             <div class="search">
-                <input class="form-control mt-2 w-25" type="text" v-model="search" placeholder="search...">
+                <input class="form-control mt-2 w-25" type="text" v-model="search" placeholder="Поиск...">
             </div>
 
             <table class="table">
@@ -14,33 +14,27 @@
                     <th scope="col">Phrase</th>
                     <th scope="col">Reting</th>
                     <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="wrapp-word" v-for="(word, index) in sortedApi" v-show="word.visible" :key="index">
-                        <td>
-                            <p v-if="editWord == 0">{{ word.en }}</p>
-                            <input class="form-control" @keyup="updateWord(word.id, $event)" v-if="editWord == 1" type="text" :value="word.en">
-                        </td>
-
-                        <td>
-                            <p v-if="editWord == 0">{{ word.ru }}</p>
-                            <input class="form-control" @keyup="updateWord(word.id, $event)" v-if="editWord == 1" type="text" :value="word.ru">
-                        </td>
-
-                        <td>
-                            <p v-if="editWord == 0">{{ word.phrase }}</p>
-                            <input class="form-control" @keyup="updateWord(word.id, $event)" v-if="editWord == 1" type="text" :value="word.phrase">
-                        </td>
-
-                        <td><span @click="updateRating(word.id, n, index)" v-for="(n, index) in 5" :class="{active: n <= word.rating}" :key="index">★</span></td>
-
-                        <td>
-                            <button @click="editWord = 1" v-if="editWord == 0" class="btn btn-primary">Редактировать/Удалить</button>
-                            <button v-if="editWord == 1" @click="deleteWord(word.id)" class="btn btn-danger">удалить</button>
-                            <button @click="editWord = 0" v-if="editWord == 1" class="btn btn-primary">Отмена</button>
-                        </td>
+                <template v-for="(word, index) in sortedApi">
+                    <tr class="wrapp-word" :key="index">
+                        <td><p>{{ word.en }}</p></td>
+                        <td><p>{{ word.ru }}</p></td>
+                        <td><p>{{ word.phrase }}</p></td>
+                        <td><span class="rating"><span @click="updateRating(word.id, n, index)" v-for="(n, index) in 5" :class="{active: n <= word.rating}" :key="index">★</span></span></td>
+                        <td><a href="#" @click.prevent="changeEditWordId(word.id, word.en, word.ru, word.phrase)" class="btn btn-primary">Редактировать</a></td>
+                        <td><a href="#" @click.prevent="deleteWord(word.id)" class="btn btn-danger">Удалить</a></td>
                     </tr>
+                    <tr v-if="editWordId === word.id" :key="'x'+index">
+                        <td><input class="form-control" v-model="en" type="text"></td>
+                        <td><input class="form-control" v-model="ru" type="text"></td>
+                        <td><input class="form-control" v-model="phrase" type="text"></td>
+                        <td><a href="#" @click.prevent="updateWord(word.id)" class="btn btn-success">Сохранить</a></td>
+                        <td><a href="#" @click.prevent="editWordId = null" class="btn btn-primary">Отмена</a></td>
+                    </tr>
+                </template>
                 </tbody>
             </table>
 
@@ -54,12 +48,15 @@
         data() {
             return {
                 api: [],
-                editWord: 0,
+                editWordId: null,
                 search: null,
+                en: null,
+                ru: null,
+                phrase: null,
             }
         },
 
-        beforeMount() {
+        mounted() {
             this.getWords()
         },
 
@@ -72,16 +69,30 @@
             },
 
             updateWord(id) {
-
+                this.editWordId = null
+                axios.patch(`/api/words/${id}`, {en: this.en, ru: this.ru, phrase: this.phrase})
+                .then( res => {
+                    this.getWords()
+                })
             },
 
             deleteWord(id) {
-
+                axios.delete(`/api/words/${id}`)
+                .then( res => {
+                    this.getWords()
+                })
             },
 
             updateRating(id, n, index) {
 
-            }
+            },
+
+            changeEditWordId(id, en, ru, phrase) {
+                this.editWordId = id
+                this.en = en
+                this.ru = ru
+                this.phrase = phrase
+            },
         },
 
         computed: {
@@ -99,12 +110,19 @@
                     }
                 }
                 // console.log(output)
-                return output.sort((a, b) => (a.rating > b.rating) ? 1 : -1)
+                return output.sort((a, b) => (a.rating > b.rating) ? -1 : 1)
             }
         },
     }
 </script>
 
 <style scoped>
+
+    .active {
+        color: rgba(0, 0, 0);
+    }
+    .rating {
+        color: rgba(0, 0, 0, 0.466);
+    }
 
 </style>

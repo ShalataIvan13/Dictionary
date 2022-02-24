@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/{page}', 'IndexController')->where('page', '.*');
+Route::group(['middleware' => ['auth', 'home']], function() {
+    Route::get('/{page}', 'IndexController')->where('page', '.*');
+});
 

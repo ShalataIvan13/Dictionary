@@ -17,7 +17,7 @@ class CreateWordsTable extends Migration
             $table->id();
             $table->string('ru');
             $table->string('en');
-            $table->text('phrese')->nullable();
+            $table->text('phrase')->nullable();
             $table->integer('rating')->nullable();
             $table->integer('user_id')->nullable();
             $table->timestamps();

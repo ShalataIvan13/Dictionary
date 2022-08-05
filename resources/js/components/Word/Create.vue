@@ -21,14 +21,26 @@
                 en: null,
                 ru: null,
                 phrase: null,
+                user_id: null,
             }
+        },
+
+        mounted() {
+            this.getAuthUser()
         },
 
         methods: {
             add() {
-                axios.post('/api/words', {en: this.en, ru: this.ru, phrase: this.phrase})
+                axios.post('/api/words', {en: this.en, ru: this.ru, phrase: this.phrase, user_id: this.user_id})
                 .then( res => {
                     router.push({name: 'word.index'})
+                })
+            },
+
+            getAuthUser() {
+                axios.get('/api/user/')
+                .then( res => {
+                    this.user_id = res.data
                 })
             },
         },

@@ -81,7 +81,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       axios.get('/api/words').then(function (res) {
-        _this.api = res.data;
+        _this.api = res.data; // console.log(res.data)
       });
     },
     updateWord: function updateWord(id) {
@@ -674,7 +674,7 @@ var render = function () {
         _c(
           "tbody",
           [
-            _vm._l(_vm.sortedApi, function (word, index) {
+            _vm._l(_vm.api, function (word, index) {
               return [
                 _c("tr", { key: index, staticClass: "wrapp-word" }, [
                   _c("td", [_c("p", [_vm._v(_vm._s(word.en))])]),

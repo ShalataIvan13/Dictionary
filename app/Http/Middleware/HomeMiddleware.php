@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeMiddleware
 {
@@ -16,7 +17,7 @@ class HomeMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        // dd(auth()->user()->id);
+        // dd(Auth::id());
         return $next($request);
     }
 }

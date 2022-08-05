@@ -31,19 +31,31 @@ __webpack_require__.r(__webpack_exports__);
     return {
       en: null,
       ru: null,
-      phrase: null
+      phrase: null,
+      user_id: null
     };
+  },
+  mounted: function mounted() {
+    this.getAuthUser();
   },
   methods: {
     add: function add() {
       axios.post('/api/words', {
         en: this.en,
         ru: this.ru,
-        phrase: this.phrase
+        phrase: this.phrase,
+        user_id: this.user_id
       }).then(function (res) {
         _router__WEBPACK_IMPORTED_MODULE_0__["default"].push({
           name: 'word.index'
         });
+      });
+    },
+    getAuthUser: function getAuthUser() {
+      var _this = this;
+
+      axios.get('/api/user').then(function (res) {
+        _this.user_id = res.data;
       });
     }
   }

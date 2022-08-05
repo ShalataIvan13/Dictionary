@@ -18,7 +18,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                <template v-for="(word, index) in sortedApi">
+                <template v-for="(word, index) in api">
                     <tr class="wrapp-word" :key="index">
                         <td><p>{{ word.en }}</p></td>
                         <td><p>{{ word.ru }}</p></td>
@@ -65,6 +65,7 @@
                 axios.get('/api/words')
                 .then( res => {
                     this.api = res.data
+                    // console.log(res.data)
                 })
             },
 

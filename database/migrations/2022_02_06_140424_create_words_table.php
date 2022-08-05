@@ -19,7 +19,7 @@ class CreateWordsTable extends Migration
             $table->string('en');
             $table->text('phrase')->nullable();
             $table->integer('rating')->nullable();
-            $table->integer('user_id')->nullable();
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

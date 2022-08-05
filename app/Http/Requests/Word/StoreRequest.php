@@ -27,6 +27,7 @@ class StoreRequest extends FormRequest
             'en' => 'string|required',
             'ru' => 'string|required',
             'phrase' => '',
+            'user_id' => 'integer|required'
         ];
     }
 }
